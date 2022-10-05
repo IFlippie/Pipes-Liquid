@@ -21,6 +21,7 @@ public class CubicCurves : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit)) 
             {
                 Debug.DrawLine(transform.position, hit.point, Color.green, 1000f);
+                
                 //points.Add(hit.point);
                 print("hit");
             }
