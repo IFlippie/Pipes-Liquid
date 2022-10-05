@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CubicCurves : MonoBehaviour
 {
-    public Vector3[] points;
+    public List<Vector3> points = new List<Vector3>();
     // Start is called before the first frame update
     void Start()
     {
@@ -14,12 +14,22 @@ public class CubicCurves : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Set position
+        if (Input.GetMouseButtonUp(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit)) 
+            {
+                Debug.DrawLine(transform.position, hit.point, Color.green, 1000f);
+                //points.Add(hit.point);
+                print("hit");
+            }
+        }
     }
 
     void MakeCurve() 
     {
-        int length = points.Length;
+        int length = points.Count;
         for (int  i = 0;  i <length;  i++)
         {
 
