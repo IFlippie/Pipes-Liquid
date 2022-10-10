@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847164085adc04045816111155666928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepSize: 6
+  stepSize: 8
   points: []
 --- !u!1 &1854399123
 GameObject:
