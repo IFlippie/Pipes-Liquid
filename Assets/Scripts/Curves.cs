@@ -34,6 +34,7 @@ public class Curves : MonoBehaviour
         //https://www.youtube.com/watch?v=RF04Fi9OCPc
         //https://docs.unity3d.com/ScriptReference/ExecuteInEditMode.html
         //https://youtu.be/yDFQIyEpJfw
+        //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
     }
 
     // Update is called once per frame
@@ -73,7 +74,6 @@ public class Curves : MonoBehaviour
                 Vector3 lineEnd = curve.GetPoint(i / (float)lineSteps);
                 Handles.DrawLine(lineStart, lineEnd);
                 lineStart = lineEnd;
-
             }
         }
             private Vector3 ShowPoint(int index)
