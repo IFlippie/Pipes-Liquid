@@ -6,6 +6,7 @@ public class CubicCurves : MonoBehaviour
 {
     public float stepSize;
     public List<Vector3> points = new List<Vector3>();
+    public GameObject pipe;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,26 +34,19 @@ public class CubicCurves : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, hit.point);
         float stepDist = dist / stepSize;
-        //print(stepDist);
+        Vector3 dir = (hit.point - transform.position).normalized;
+
         for (int  i = 1;  i < stepSize;  i++)
-        {          
-            Vector3 pos = transform.position + (hit.point - transform.position).normalized * (stepDist * i);
-
-            Debug.DrawRay(pos, Vector3.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(pos, Vector3.down * 3f, Color.red, 10000f);
-            Debug.DrawRay(pos, Vector3.left * 3f, Color.red, 10000f);
-            Debug.DrawRay(pos, Vector3.right * 3f, Color.red, 10000f);
-
-            if (Physics.Raycast(pos,Vector3.up * 3f ,out RaycastHit upHit)) { }
-            if (Physics.Raycast(pos, Vector3.down * 3f, out RaycastHit downHit)) { }
-            if (Physics.Raycast(pos, Vector3.left * 3f, out RaycastHit leftHit)) { }
-            if (Physics.Raycast(pos, Vector3.right * 3f, out RaycastHit rightHit)) { }
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.position = pos;
-
-            //print("cube point is: " + cube.transform.position);
+        {        
+            Vector3 pos = transform.position + dir * (stepDist * i);
             points.Add(pos);
         }
+
+        GameObject spawnedPipe = Instantiate(pipe, transform.position, transform.rotation);
+        GeneratePipe gp = spawnedPipe.GetComponent<GeneratePipe>();
+        gp.points.AddRange(points);
+        points.Clear();
+        //print("CC"+points.Count);
         //print("end point is: " + hit.point);
     }
 }

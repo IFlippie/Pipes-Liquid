@@ -35,6 +35,7 @@ public class Curves : MonoBehaviour
         //https://docs.unity3d.com/ScriptReference/ExecuteInEditMode.html
         //https://youtu.be/yDFQIyEpJfw
         //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
+        //https://catlikecoding.com/unity/tutorials/swirly-pipe/
     }
 
     // Update is called once per frame

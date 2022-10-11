@@ -19,7 +19,6 @@ public class MeshUpperBody : MonoBehaviour
     public float pipeRadius;
     public float curveRadius;
     public float ringDistance;
-    public float bodyOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +35,8 @@ public class MeshUpperBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //GeneratePipe();
-        StartCoroutine(GenerateArmsInSteps());
+        GeneratePipe();
+        //StartCoroutine(GenerateArmsInSteps());
     }
 
     //shows generated vertices in the editor
