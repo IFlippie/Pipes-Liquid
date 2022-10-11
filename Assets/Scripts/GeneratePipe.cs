@@ -58,7 +58,7 @@ public class GeneratePipe : MonoBehaviour
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
         //float uStep = ringDistance / curveRadius;
             
-        pipeVertices = new Vector3[verticesPerPoint * points.Count];
+        pipeVertices = new Vector3[verticesPerPoint * (points.Count + 1)];
         print(pipeVertices.Length);
         for (int k = 0, j = 0; j <= points.Count; j++)
         {
