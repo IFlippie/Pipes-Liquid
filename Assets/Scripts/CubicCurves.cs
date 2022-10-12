@@ -42,7 +42,8 @@ public class CubicCurves : MonoBehaviour
             points.Add(pos);
         }
 
-        GameObject spawnedPipe = Instantiate(pipe, transform.position, transform.rotation);
+        GameObject spawnedPipe = Instantiate(pipe);
+        spawnedPipe.transform.InverseTransformPoint(transform.position);
         GeneratePipe gp = spawnedPipe.GetComponent<GeneratePipe>();
         gp.points.AddRange(points);
         points.Clear();
