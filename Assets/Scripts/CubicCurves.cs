@@ -5,7 +5,7 @@ using UnityEngine;
 public class CubicCurves : MonoBehaviour
 {
     public float stepSize;
-    public List<Vector3> points = new List<Vector3>();
+    public List<GameObject> points = new List<GameObject>();
     public GameObject pipe;
     // Start is called before the first frame update
     void Start()
@@ -37,8 +37,10 @@ public class CubicCurves : MonoBehaviour
         Vector3 dir = (hit.point - transform.position).normalized;
 
         for (int  i = 1;  i < stepSize;  i++)
-        {        
-            Vector3 pos = transform.position + dir * (stepDist * i);
+        {
+            GameObject pos = new GameObject();
+            pos.transform.position = transform.position + dir * (stepDist * i);
+            pos.transform.rotation = Quaternion.FromToRotation(transform.position,hit.point);
             points.Add(pos);
         }
 

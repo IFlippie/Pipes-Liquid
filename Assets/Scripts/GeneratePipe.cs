@@ -8,7 +8,7 @@ public class GeneratePipe : MonoBehaviour
     Mesh me;
     MeshFilter mf;
     Vector3[] pipeVertices;
-    public List<Vector3> points = new List<Vector3>();
+    public List<GameObject> points = new List<GameObject>();
     int[] triangles;
     int layers;
 
@@ -41,15 +41,15 @@ public class GeneratePipe : MonoBehaviour
     {
         for (int i = 0; i < points.Count; i++)
         {
-            Debug.DrawRay(points[i], transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i], -transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i], -transform.right * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i], transform.right * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, transform.up * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, -transform.up * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, -transform.right * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, transform.right * 3f, Color.red, 10000f);
 
-            if (Physics.Raycast(points[i], transform.up * 3f, out RaycastHit upHit)) { }
-            if (Physics.Raycast(points[i], -transform.up * 3f, out RaycastHit downHit)) { }
-            if (Physics.Raycast(points[i], -transform.right * 3f, out RaycastHit leftHit)) { }
-            if (Physics.Raycast(points[i], transform.right * 3f, out RaycastHit rightHit)) { }
+            if (Physics.Raycast(points[i].transform.position, transform.up * 3f, out RaycastHit upHit)) { }
+            if (Physics.Raycast(points[i].transform.position, -transform.up * 3f, out RaycastHit downHit)) { }
+            if (Physics.Raycast(points[i].transform.position, -transform.right * 3f, out RaycastHit leftHit)) { }
+            if (Physics.Raycast(points[i].transform.position, transform.right * 3f, out RaycastHit rightHit)) { }
 
             //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             //cube.transform.position = points[i];
@@ -66,9 +66,9 @@ public class GeneratePipe : MonoBehaviour
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
-                p.x = points[j].x + (r * Mathf.Sin(0f));
-                p.y = points[j].y + (r * Mathf.Cos(0f));
-                p.z = points[j].z + (pipeRadius * Mathf.Sin(o * vStep));
+                p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
+                p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
+                p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
@@ -125,9 +125,9 @@ public class GeneratePipe : MonoBehaviour
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
-                p.x = points[j].x + (r * Mathf.Sin(0f));
-                p.y = points[j].y + (r * Mathf.Cos(0f));
-                p.z = points[j].z + (pipeRadius * Mathf.Sin(o * vStep));
+                p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
+                p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
+                p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
