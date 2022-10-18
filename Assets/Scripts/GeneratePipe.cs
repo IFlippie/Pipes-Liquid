@@ -12,7 +12,7 @@ public class GeneratePipe : MonoBehaviour
     int[] triangles;
     int layers;
 
-    [Header("Arms")]
+    [Header("Pipe")]
     public int verticesPerPoint;
     //Distance between the vertices in each layer
     public float pipeRadius;
@@ -29,6 +29,8 @@ public class GeneratePipe : MonoBehaviour
         me.Clear();
         layers = points.Count;
         SpawnPoints();
+        //transform.rotation = points[0].transform.rotation;
+        //transform.position = GetComponent<Renderer>().bounds.center;
     }
 
     // Update is called once per frame
@@ -58,14 +60,16 @@ public class GeneratePipe : MonoBehaviour
         //StartCoroutine(GeneratePipeInSteps());
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
 
+
         pipeVertices = new Vector3[verticesPerPoint * layers];
-        print(pipeVertices.Length);
+        //print(pipeVertices.Length);
         for (int k = 0, j = 0; j < layers; j++)
         {
             for (int o = 0; o < verticesPerPoint; o++, k++)
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
+                print("r " + r);
                 p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
                 p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
                 p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
@@ -75,13 +79,13 @@ public class GeneratePipe : MonoBehaviour
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 cube.transform.position = vPos;
                 cube.transform.localScale = cube.transform.localScale * 0.1f;
-                print(k);
+                //print(k);
             }
         }
         me.vertices = pipeVertices;
 
         triangles = new int[verticesPerPoint * layers * 6];
-        for (int ti = 0, vi = 0, z = 0; z < layers; z++, vi++)
+        for (int ti = 0, vi = 0, z = 0; z < layers - 1; z++, vi++)
         {
             for (int x = 0; x < verticesPerPoint; x++, ti += 6)
             {

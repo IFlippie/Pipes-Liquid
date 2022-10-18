@@ -97,5 +97,3 @@ MonoBehaviour:
   points: []
   verticesPerPoint: 5
   pipeRadius: 1
-  ringDistance: 0
-  curveRadius: 0
