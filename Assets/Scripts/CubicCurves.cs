@@ -5,7 +5,7 @@ using UnityEngine;
 public class CubicCurves : MonoBehaviour
 {
     public float stepSize;
-    public GameObject mainCamera;
+    public GameObject StartPoint;
     public List<GameObject> points = new List<GameObject>();
     public GameObject pipe;
     // Start is called before the first frame update
@@ -23,39 +23,50 @@ public class CubicCurves : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit)) 
             {
-                Debug.DrawLine(mainCamera.transform.position, hit.point, Color.green, 10000f);
+                Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
                 //print(Vector3.Angle(hit.normal, ray.direction));
                 MakeCurve(ray, hit);
+            }
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.transform.tag == "StartPoint")
+                {
+                    StartPoint = hit.transform.gameObject;
+                }
             }
         }
     }
     
     void MakeCurve(Ray ray, RaycastHit hit) 
     {
-        float dist = Vector3.Distance(mainCamera.transform.position, hit.point);
+        float dist = Vector3.Distance(StartPoint.transform.position, hit.point);
         float stepDist = dist / stepSize;
-        Vector3 dir = (hit.point - mainCamera.transform.position).normalized;
+        Vector3 dir = (hit.point - StartPoint.transform.position).normalized;
+
+        GameObject startPos = new GameObject();
+        startPos.transform.position = StartPoint.transform.position + StartPoint.transform.forward;
+        startPos.transform.right = dir * -1;
+        points.Add(startPos);
 
         for (int  i = 1;  i < stepSize;  i++)
         {
             GameObject pos = new GameObject();
-            pos.transform.position = mainCamera.transform.position + dir * (stepDist * i);
-            //pos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position,hit.point);
+            pos.transform.position = StartPoint.transform.position + dir * (stepDist * i);
             pos.transform.right = dir* - 1;
-            //pos.transform.rotation = Quaternion.LookRotation(hit.point, Vector3.up);
             points.Add(pos);
         }
 
         GameObject endPos = new GameObject();
         endPos.transform.position = hit.point;
-        //endPos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position, hit.point);
         endPos.transform.right = dir * -1;
-        //endPos.transform.rotation = Quaternion.LookRotation(hit.point, Vector3.up);
         points.Add(endPos);
 
         GameObject spawnedPipe = Instantiate(pipe);
-        //spawnedPipe.transform.position = mainCamera.transform.position;
         GeneratePipe gp = spawnedPipe.GetComponent<GeneratePipe>();
         gp.points.AddRange(points);
         points.Clear();
