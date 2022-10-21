@@ -44,8 +44,7 @@ public class TestRing : MonoBehaviour
     {
         for (int o = 0; o < verticesPerPoint; o++)
         {
-
-            Quaternion q = Quaternion.Euler(0f, 1f, 0f);
+            Quaternion q = Quaternion.Euler(x, 1f, z);
             pipeVertices[o] = q * (pipeVertices[o] - transform.position) + transform.position;
 
             points[o].transform.position = pipeVertices[o];

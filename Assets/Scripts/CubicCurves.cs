@@ -41,13 +41,17 @@ public class CubicCurves : MonoBehaviour
         {
             GameObject pos = new GameObject();
             pos.transform.position = mainCamera.transform.position + dir * (stepDist * i);
-            pos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position,hit.point);
+            //pos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position,hit.point);
+            pos.transform.right = dir* - 1;
+            //pos.transform.rotation = Quaternion.LookRotation(hit.point, Vector3.up);
             points.Add(pos);
         }
 
         GameObject endPos = new GameObject();
         endPos.transform.position = hit.point;
-        endPos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position, hit.point);
+        //endPos.transform.rotation = Quaternion.FromToRotation(mainCamera.transform.position, hit.point);
+        endPos.transform.right = dir * -1;
+        //endPos.transform.rotation = Quaternion.LookRotation(hit.point, Vector3.up);
         points.Add(endPos);
 
         GameObject spawnedPipe = Instantiate(pipe);

@@ -69,16 +69,19 @@ public class GeneratePipe : MonoBehaviour
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
-                print("r " + r);
                 p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
                 p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
                 p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
+                Quaternion q = points[j].transform.rotation;
+                pipeVertices[k] = q * (pipeVertices[k] - points[j].transform.position) + points[j].transform.position;
+
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 cube.transform.position = vPos;
                 cube.transform.localScale = cube.transform.localScale * 0.1f;
+                cube.transform.position = q * (cube.transform.position - points[j].transform.position) + points[j].transform.position;
                 //print(k);
             }
         }
