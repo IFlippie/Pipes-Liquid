@@ -7,3 +7,8 @@ always showing a preview when trying to create a pipe
 calculating the direction again FOR EACH pipe part that has moved because of the curve
 
 apply shader for texture and color preview
+
+Figure out how to use the generated points because the current way has no implementation for
+Bezier curves
+
+So either continue with the points and use them or find a way to implement the bezier curve
