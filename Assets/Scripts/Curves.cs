@@ -37,6 +37,7 @@ public class Curves : MonoBehaviour
         //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
         //https://catlikecoding.com/unity/tutorials/swirly-pipe/
         //https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
+        //https://hextantstudios.com/unity-flat-low-poly-shader/
     }
 
     // Update is called once per frame

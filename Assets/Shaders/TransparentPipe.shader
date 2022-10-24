@@ -16,8 +16,10 @@ Shader "Custom/TransparentPipe"
         Pass
         {
             CGPROGRAM
+
             #pragma vertex vert
             #pragma fragment frag
+            #pragma geometry geom
 
             #include "UnityCG.cginc"
 
@@ -45,11 +47,34 @@ Shader "Custom/TransparentPipe"
                 return o;
             }
 
+            [maxvertexcount(3)]
+            void MyGeometryProgram(
+                triangle InterpolatorsVertex i[3],
+                inout TriangleStream<InterpolatorsVertex> stream
+            ) {
+                float3 p0 = i[0].worldPos.xyz;
+                float3 p1 = i[1].worldPos.xyz;
+                float3 p2 = i[2].worldPos.xyz;
+
+                stream.Append(i[0]);
+                stream.Append(i[1]);
+                stream.Append(i[2]);
+
+                float3 triangleNormal = normalize(cross(p1 - p0, p2 - p0));
+                i[0].normal = triangleNormal;
+                i[1].normal = triangleNormal;
+                i[2].normal = triangleNormal;
+            }
+
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+                
                 return col;
             }
+
+            
+
             ENDCG
         }
     }
