@@ -14,3 +14,13 @@ Bezier curves
 So either continue with the points and use them or find a way to implement the bezier curve
 
 stop thinking that you have to do a forward check from point a to B, its not necessary
+
+how do you determine in which direction you want to do checks and when would you say that they are done
+
+so perhaps use vector3 up and down and determine angles at which you cannot place pipes
+
+use vector3 up on endpoint
+and make anchor the downwards or forward based on the startingpoint position
+
+so if startingpoint is higher than end point, the anchor will be lowered to the height of the endpoint and if endpoint is higher than startingpoint the anchor will be moved towards the endingpoint in length
+this doesnt solve the issue of what if the curve should be curved upwards instead of the usual downwards

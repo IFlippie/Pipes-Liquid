@@ -8,7 +8,8 @@ public class GeneratePipe : MonoBehaviour
     Mesh me;
     MeshFilter mf;
     Vector3[] pipeVertices;
-    public List<GameObject> points = new List<GameObject>();
+    public List<GameObject> pipePoints = new List<GameObject>();
+    public List<GameObject> dirPoints = new List<GameObject>();
     int[] triangles;
     int layers;
     public Vector3 direction;
@@ -28,7 +29,7 @@ public class GeneratePipe : MonoBehaviour
 
         mf.mesh = me;
         me.Clear();
-        layers = points.Count;
+        layers = pipePoints.Count;
         SpawnPoints();
         //transform.rotation = points[0].transform.rotation;
         //transform.position = GetComponent<Renderer>().bounds.center;
@@ -42,21 +43,19 @@ public class GeneratePipe : MonoBehaviour
 
     public void SpawnPoints() 
     {
-        for (int i = 0; i < points.Count; i++)
+        for (int i = 0; i < dirPoints.Count; i++)
         {
-            Debug.DrawRay(points[i].transform.position, points[i].transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, -points[i].transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, -points[i].transform.right * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, points[i].transform.right * 3f, Color.red, 10000f);
+            //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, Color.red, 10000f);
+            Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, Color.red, 10000f);
+            //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, Color.red, 10000f);
+            //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, Color.red, 10000f);
 
-            if (Physics.Raycast(points[i].transform.position, points[i].transform.up * 3f, out RaycastHit upHit)) { }
-            if (Physics.Raycast(points[i].transform.position, -points[i].transform.up * 3f, out RaycastHit downHit)) { }
-            if (Physics.Raycast(points[i].transform.position, -points[i].transform.right * 3f, out RaycastHit leftHit)) { }
-            if (Physics.Raycast(points[i].transform.position, points[i].transform.right * 3f, out RaycastHit rightHit)) { }
-
-            //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //cube.transform.position = points[i];
+            if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, out RaycastHit upHit)) { }
+            if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, out RaycastHit downHit)) { pipePoints[i + 1].transform.position += dirPoints[i].transform.up; }
+            if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, out RaycastHit leftHit)) { }
+            if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, out RaycastHit rightHit)) { }
         }
+
 
         //StartCoroutine(GeneratePipeInSteps());
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
@@ -70,14 +69,14 @@ public class GeneratePipe : MonoBehaviour
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
-                p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
-                p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
-                p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
+                p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
+                p.y = pipePoints[j].transform.position.y + (r * Mathf.Cos(0f));
+                p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
-                Quaternion q = points[j].transform.rotation;
-                pipeVertices[k] = q * (pipeVertices[k] - points[j].transform.position) + points[j].transform.position;
+                Quaternion q = pipePoints[j].transform.rotation;
+                pipeVertices[k] = q * (pipeVertices[k] - pipePoints[j].transform.position) + pipePoints[j].transform.position;
 
                 //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 //cube.transform.position = vPos;
@@ -133,9 +132,9 @@ public class GeneratePipe : MonoBehaviour
             {
                 Vector3 p;
                 float r = pipeRadius * Mathf.Cos(o * vStep);
-                p.x = points[j].transform.position.x + (r * Mathf.Sin(0f));
-                p.y = points[j].transform.position.y + (r * Mathf.Cos(0f));
-                p.z = points[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
+                p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
+                p.y = pipePoints[j].transform.position.y + (r * Mathf.Cos(0f));
+                p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
