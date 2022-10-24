@@ -25,7 +25,6 @@ public class CubicCurves : MonoBehaviour
             {
                 Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
-                //print(Vector3.Angle(hit.normal, ray.direction));
                 MakeCurve(ray, hit);
             }
         }

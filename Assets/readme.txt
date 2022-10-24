@@ -12,3 +12,5 @@ Figure out how to use the generated points because the current way has no implem
 Bezier curves
 
 So either continue with the points and use them or find a way to implement the bezier curve
+
+stop thinking that you have to do a forward check from point a to B, its not necessary

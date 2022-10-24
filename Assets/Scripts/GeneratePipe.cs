@@ -11,6 +11,7 @@ public class GeneratePipe : MonoBehaviour
     public List<GameObject> points = new List<GameObject>();
     int[] triangles;
     int layers;
+    public Vector3 direction;
 
     [Header("Pipe")]
     public int verticesPerPoint;
@@ -43,15 +44,15 @@ public class GeneratePipe : MonoBehaviour
     {
         for (int i = 0; i < points.Count; i++)
         {
-            Debug.DrawRay(points[i].transform.position, transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, -transform.up * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, -transform.right * 3f, Color.red, 10000f);
-            Debug.DrawRay(points[i].transform.position, transform.right * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, points[i].transform.up * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, -points[i].transform.up * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, -points[i].transform.right * 3f, Color.red, 10000f);
+            Debug.DrawRay(points[i].transform.position, points[i].transform.right * 3f, Color.red, 10000f);
 
-            if (Physics.Raycast(points[i].transform.position, transform.up * 3f, out RaycastHit upHit)) { }
-            if (Physics.Raycast(points[i].transform.position, -transform.up * 3f, out RaycastHit downHit)) { }
-            if (Physics.Raycast(points[i].transform.position, -transform.right * 3f, out RaycastHit leftHit)) { }
-            if (Physics.Raycast(points[i].transform.position, transform.right * 3f, out RaycastHit rightHit)) { }
+            if (Physics.Raycast(points[i].transform.position, points[i].transform.up * 3f, out RaycastHit upHit)) { }
+            if (Physics.Raycast(points[i].transform.position, -points[i].transform.up * 3f, out RaycastHit downHit)) { }
+            if (Physics.Raycast(points[i].transform.position, -points[i].transform.right * 3f, out RaycastHit leftHit)) { }
+            if (Physics.Raycast(points[i].transform.position, points[i].transform.right * 3f, out RaycastHit rightHit)) { }
 
             //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             //cube.transform.position = points[i];
@@ -78,10 +79,10 @@ public class GeneratePipe : MonoBehaviour
                 Quaternion q = points[j].transform.rotation;
                 pipeVertices[k] = q * (pipeVertices[k] - points[j].transform.position) + points[j].transform.position;
 
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                cube.transform.position = vPos;
-                cube.transform.localScale = cube.transform.localScale * 0.1f;
-                cube.transform.position = q * (cube.transform.position - points[j].transform.position) + points[j].transform.position;
+                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //cube.transform.position = vPos;
+                //cube.transform.localScale = cube.transform.localScale * 0.1f;
+                //cube.transform.position = q * (cube.transform.position - points[j].transform.position) + points[j].transform.position;
                 //print(k);
             }
         }
@@ -138,9 +139,9 @@ public class GeneratePipe : MonoBehaviour
                 var vPos = p;
                 pipeVertices[k] = vPos;
 
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                cube.transform.position = vPos;
-                cube.transform.localScale = cube.transform.localScale * 0.1f;
+                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //cube.transform.position = vPos;
+                //cube.transform.localScale = cube.transform.localScale * 0.1f;
                 yield return new WaitForSeconds(1f);
                 print(k);
             }
