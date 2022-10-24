@@ -24,3 +24,5 @@ and make anchor the downwards or forward based on the startingpoint position
 
 so if startingpoint is higher than end point, the anchor will be lowered to the height of the endpoint and if endpoint is higher than startingpoint the anchor will be moved towards the endingpoint in length
 this doesnt solve the issue of what if the curve should be curved upwards instead of the usual downwards
+
+based on the anchor we will be able to set it to up, down, left, right and it won't be solely the middle point but we can start the anchor in the middle
