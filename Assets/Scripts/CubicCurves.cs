@@ -22,7 +22,7 @@ public class CubicCurves : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit)) 
+            if (Physics.Raycast(ray, out RaycastHit hit) && StartPoint != null) 
             {
                 Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 

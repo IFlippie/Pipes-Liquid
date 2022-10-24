@@ -598,8 +598,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stepSize: 8
-  StartPoint: {fileID: 963194225}
-  points: []
+  StartPoint: {fileID: 0}
+  pipePoints: []
+  dirPoints: []
   pipe: {fileID: 761195775218569250, guid: 4ab21bcac308ce94a8b1a808a2a2c2fb, type: 3}
 --- !u!1 &1854399123
 GameObject:
