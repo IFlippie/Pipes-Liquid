@@ -30,9 +30,8 @@ public class GeneratePipe : MonoBehaviour
         mf.mesh = me;
         me.Clear();
         layers = pipePoints.Count;
-        SpawnPoints();
-        //transform.rotation = points[0].transform.rotation;
-        //transform.position = GetComponent<Renderer>().bounds.center;
+        SmoothPipeSpawnPoints();
+        //FlatPipeSpawnPoints();
     }
 
     // Update is called once per frame
@@ -41,7 +40,7 @@ public class GeneratePipe : MonoBehaviour
         
     }
 
-    public void SpawnPoints() 
+    public void SmoothPipeSpawnPoints() 
     {
         for (int i = 0; i < dirPoints.Count; i++)
         {
@@ -56,8 +55,6 @@ public class GeneratePipe : MonoBehaviour
             if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, out RaycastHit rightHit)) { }
         }
 
-
-        //StartCoroutine(GeneratePipeInSteps());
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
 
 
@@ -77,12 +74,6 @@ public class GeneratePipe : MonoBehaviour
 
                 Quaternion q = pipePoints[j].transform.rotation;
                 pipeVertices[k] = q * (pipeVertices[k] - pipePoints[j].transform.position) + pipePoints[j].transform.position;
-
-                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                //cube.transform.position = vPos;
-                //cube.transform.localScale = cube.transform.localScale * 0.1f;
-                //cube.transform.position = q * (cube.transform.position - points[j].transform.position) + points[j].transform.position;
-                //print(k);
             }
         }
         me.vertices = pipeVertices;
@@ -119,36 +110,38 @@ public class GeneratePipe : MonoBehaviour
         me.RecalculateNormals();
     }
 
-    private IEnumerator GeneratePipeInSteps() 
+    public void FlatPipeSpawnPoints()
     {
-        yield return new WaitForSeconds(1f);
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
 
-        pipeVertices = new Vector3[verticesPerPoint * layers];
+        //first part represents the amount of vertices in start and finish, second part represents all the vertices inbetween
+        //is this correct???
+        pipeVertices = new Vector3[(2 * (verticesPerPoint * 3)) + ((verticesPerPoint * (layers-2)) * 5)];
         print(pipeVertices.Length);
-        for (int k = 0, j = 0; j < layers; j++)
+        for (int k = 0, c = 0; c < 2; c++)
         {
-            for (int o = 0; o < verticesPerPoint; o++, k++)
+            for (int j = 0; j < layers; j++)
             {
-                Vector3 p;
-                float r = pipeRadius * Mathf.Cos(o * vStep);
-                p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
-                p.y = pipePoints[j].transform.position.y + (r * Mathf.Cos(0f));
-                p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
-                var vPos = p;
-                pipeVertices[k] = vPos;
+                for (int o = 0; o < verticesPerPoint; o++, k++)
+                {
+                    Vector3 p;
+                    float r = pipeRadius * Mathf.Cos(o * vStep);
+                    p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
+                    p.y = pipePoints[j].transform.position.y + (r * Mathf.Cos(0f));
+                    p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
+                    var vPos = p;
+                    pipeVertices[k] = vPos;
 
-                //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                //cube.transform.position = vPos;
-                //cube.transform.localScale = cube.transform.localScale * 0.1f;
-                yield return new WaitForSeconds(1f);
-                print(k);
+                    Quaternion q = pipePoints[j].transform.rotation;
+                    pipeVertices[k] = q * (pipeVertices[k] - pipePoints[j].transform.position) + pipePoints[j].transform.position;
+                }
             }
         }
+        
         me.vertices = pipeVertices;
 
         triangles = new int[verticesPerPoint * layers * 6];
-        for (int ti = 0, vi = 0, z = 0; z < layers; z++, vi++)
+        for (int ti = 0, vi = 0, z = 0; z < layers - 1; z++, vi++)
         {
             for (int x = 0; x < verticesPerPoint; x++, ti += 6)
             {
@@ -161,8 +154,6 @@ public class GeneratePipe : MonoBehaviour
                     triangles[ti + 1] = triangles[ti + 4] = vi + verticesPerPoint;
                     triangles[ti + 5] = vi + verticesPerPoint + 1;
                     vi++;
-                    print("standard" + vi);
-                    yield return new WaitForSeconds(1f);
                     me.triangles = triangles;
                 }
                 else
@@ -173,8 +164,6 @@ public class GeneratePipe : MonoBehaviour
                     triangles[ti + 4] = vi + verticesPerPoint;
                     triangles[ti + 3] = vi - verticesPerPoint + 1;
                     triangles[ti + 5] = vi + 1;
-                    print("standard" + vi);
-                    yield return new WaitForSeconds(1f);
                     me.triangles = triangles;
                 }
             }
