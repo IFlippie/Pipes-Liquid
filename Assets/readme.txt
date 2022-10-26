@@ -1,7 +1,4 @@
-
-always showing a preview when trying to create a pipe, so do this when start point is selected and implement this by having a seperate preview mesh
-
-bezier curve implementation:
+BEZIER CURVE IMPLEMENTATION:
 
 how do you determine in which direction you want to do checks and when would you say that they are done?
 
@@ -15,10 +12,19 @@ based on the anchor we will be able to set it to up, down, left, right and it wo
 
 calculating the direction again FOR EACH pipe part that has moved because of the curve
 
+PREVIEWING IMPLEMENTATION:
+
+always showing a preview when trying to create a pipe, so do this when start point is selected and implement this by having a seperate preview mesh
+
+CONNECTION IMPLEMENTATION:
+
+should be easy as just spawning a new starting point at the end of the generated pipe
+
 EXTRA FOR ART POINTS:
 
 add texture rotation
 add color for when it's possible or not possible to place said pipe, do this by setting a angle and length limit
 double the vertices to get flat shading by making every triangle with unique vertices
 add flowmap shader to simulate liquid inside pipe
+make mesh for starting and end points
 

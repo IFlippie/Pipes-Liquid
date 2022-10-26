@@ -117,7 +117,7 @@ public class GeneratePipe : MonoBehaviour
         //first part represents the amount of vertices in start and finish, second part represents all the vertices inbetween
         //is this correct???
         pipeVertices = new Vector3[(2 * (verticesPerPoint * 3)) + ((verticesPerPoint * (layers-2)) * 5)];
-        print(pipeVertices.Length);
+        //print(pipeVertices.Length);
         for (int k = 0, c = 0; c < 2; c++)
         {
             for (int j = 0; j < layers; j++)
