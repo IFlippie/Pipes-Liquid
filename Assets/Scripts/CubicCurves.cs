@@ -26,7 +26,7 @@ public class CubicCurves : MonoBehaviour
             {
                 Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
-                MakeCurve(ray, hit);
+                MakePipe(ray, hit);
             }
         }
         if (Input.GetMouseButtonUp(1))
@@ -42,7 +42,7 @@ public class CubicCurves : MonoBehaviour
         }
     }
     
-    void MakeCurve(Ray ray, RaycastHit hit) 
+    void MakePipe(Ray ray, RaycastHit hit) 
     {
         float dist = Vector3.Distance(StartPoint.transform.position, hit.point);
         float stepDist = dist / stepSize;
@@ -77,4 +77,6 @@ public class CubicCurves : MonoBehaviour
         pipePoints.Clear();
         dirPoints.Clear();
     }
+
+    void MakeCurve() { }
 }

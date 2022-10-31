@@ -50,10 +50,10 @@ public class GeneratePipe : MonoBehaviour
             //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, Color.red, 10000f);
             //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, Color.red, 10000f);
 
-            if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, out RaycastHit upHit)) { }
-            if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, out RaycastHit downHit)) { pipePoints[i + 1].transform.position += dirPoints[i].transform.up; }
-            if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, out RaycastHit leftHit)) { }
-            if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, out RaycastHit rightHit)) { }
+            //if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, out RaycastHit upHit)) { }
+            //if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, out RaycastHit downHit)) { pipePoints[i + 1].transform.position += dirPoints[i].transform.up; }
+            //if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, out RaycastHit leftHit)) { }
+            //if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, out RaycastHit rightHit)) { }
         }
 
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
