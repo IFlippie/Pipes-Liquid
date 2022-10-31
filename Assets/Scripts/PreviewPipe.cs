@@ -40,15 +40,12 @@ public class PreviewPipe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (cubicCurves.StartPoint != previewStartPoint)
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    previewStartPoint = cubicCurves.StartPoint;
-        //    if (Physics.Raycast(ray, out RaycastHit hit) && previewStartPoint != null)
-        //    {
-        //        MakeCurve(ray, hit);
-        //    }
-        //}
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        previewStartPoint = cubicCurves.StartPoint;
+        if (Physics.Raycast(ray, out RaycastHit hit) && previewStartPoint != null)
+        {
+            MakeCurve(ray, hit);
+        }
     }
 
     public void SmoothPipeSpawnPoints()
@@ -58,7 +55,7 @@ public class PreviewPipe : MonoBehaviour
         for (int i = 0; i < dirPoints.Count; i++)
         {
             //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, Color.red, 10000f);
-            Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, Color.red, 10000f);
+            //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, Color.red, 10000f);
             //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, Color.red, 10000f);
             //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, Color.red, 10000f);
 

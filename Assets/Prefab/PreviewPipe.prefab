@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 761195775218569261}
   - component: {fileID: 761195775218569260}
   - component: {fileID: 761195775218569251}
-  - component: {fileID: 761195775218569262}
+  - component: {fileID: 7350494964548827149}
   m_Layer: 0
   m_Name: PreviewPipe
   m_TagString: Untagged
@@ -82,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &761195775218569262
+--- !u!114 &7350494964548827149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,12 +91,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 761195775218569250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21dea0333a6ade04fbe56bc5bc71376e, type: 3}
+  m_Script: {fileID: 11500000, guid: 54fef6b19e896b74b95c1f8e32585a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pipePoints: []
   dirPoints: []
-  direction: {x: 0, y: 0, z: 0}
   verticesPerPoint: 5
   pipeRadius: 1
-  endPoint: {fileID: 811228198908936312, guid: a3df957728706874499540fa36c4e7d6, type: 3}
+  cubicCurves: {fileID: 0}
