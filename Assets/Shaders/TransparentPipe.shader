@@ -10,7 +10,7 @@ Shader "Custom/TransparentPipe"
         Tags {"Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent"}
         ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull front
+        //Cull front
         LOD 100
 
         Pass

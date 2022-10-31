@@ -24,7 +24,8 @@ EXTRA FOR ART POINTS:
 
 add texture rotation
 add color for when it's possible or not possible to place said pipe, do this by setting a angle and length limit
+make mesh for starting and end points
 double the vertices to get flat shading by making every triangle with unique vertices
 add flowmap shader to simulate liquid inside pipe
-make mesh for starting and end points
+
 
