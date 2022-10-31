@@ -18,6 +18,8 @@ CONNECTION IMPLEMENTATION:
 
 should be easy as just spawning a new starting point at the end of the generated pipe
 
+CODE CLEANUP!!!!!!!!!!
+
 EXTRA FOR ART POINTS:
 
 add texture rotation
