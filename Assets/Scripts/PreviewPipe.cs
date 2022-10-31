@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-public class GeneratePipe : MonoBehaviour
+public class PreviewPipe : MonoBehaviour
 {
     Mesh me;
     MeshFilter mf;
@@ -19,42 +18,43 @@ public class GeneratePipe : MonoBehaviour
     public int verticesPerPoint;
     //Distance between the vertices in each layer
     public float pipeRadius;
-    public GameObject endPoint;
+    public CubicCurves cubicCurves;
+    GameObject previewStartPoint;
+    float stepSize;
+    //public GameObject endPoint;
     // Start is called before the first frame update
     void Start()
     {
         mf = GetComponent<MeshFilter>();
         me = new Mesh()
         {
-            name = "Pipe Part"
+            name = "Pipe Preview"
         };
 
         mf.mesh = me;
         me.Clear();
-        layers = pipePoints.Count;
-
-        SmoothPipeSpawnPoints();
-        //FlatPipeSpawnPoints();
+        stepSize = cubicCurves.stepSize;
+        //layers = pipePoints.Count;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (cubicCurves.StartPoint != previewStartPoint)
+        //{
+        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //    previewStartPoint = cubicCurves.StartPoint;
+        //    if (Physics.Raycast(ray, out RaycastHit hit) && previewStartPoint != null)
+        //    {
+        //        MakeCurve(ray, hit);
+        //    }
+        //}
     }
 
-    public void SmoothPipeSpawnPoints() 
+    public void SmoothPipeSpawnPoints()
     {
-        //mf = GetComponent<MeshFilter>();
-        //me = new Mesh()
-        //{
-        //    name = "Pipe Part"
-        //};
-
-        //mf.mesh = me;
-        //me.Clear();
-        //layers = pipePoints.Count;
-
+        me.Clear();
+        layers = pipePoints.Count;
         for (int i = 0; i < dirPoints.Count; i++)
         {
             //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, Color.red, 10000f);
@@ -123,71 +123,62 @@ public class GeneratePipe : MonoBehaviour
         me.RecalculateNormals();
     }
 
-    public void FlatPipeSpawnPoints()
+    void MakeCurve(Ray ray, RaycastHit hit)
     {
-        float vStep = (2f * Mathf.PI) / verticesPerPoint;
+        float dist = Vector3.Distance(previewStartPoint.transform.position, hit.point);
+        float stepDist = dist / stepSize;
+        Vector3 dir = (hit.point - previewStartPoint.transform.position).normalized;
 
-        //first part represents the amount of vertices in start and finish, second part represents all the vertices inbetween
-        //is this correct???             5 * 3 = 15 * 2 = 30                       5 * 7 = 35 * 5 = 175
-        pipeVertices = new Vector3[(2 * (verticesPerPoint * 3)) + ((verticesPerPoint * (layers-2)) * 5)];
-        print("verticesperpoint " + verticesPerPoint);
-        print("layers " + layers);
-        print(pipeVertices.Length);//205
-        for (int k = 0, c = 0; c < 4; c++)//5
+        GameObject startPos = new GameObject();
+        startPos.transform.position = previewStartPoint.transform.position;
+        //startPos.transform.position = StartPoint.transform.position + dir;
+        startPos.transform.right = dir * -1;
+        pipePoints.Add(startPos);
+        //GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //cube1.transform.position = startPos.transform.position;
+        //cube1.transform.localScale = cube1.transform.localScale * 0.1f;
+        //print("startPos : " + startPos.transform.position);
+
+        GameObject endPos = new GameObject();
+        endPos.transform.position = hit.point;
+        endPos.transform.right = dir * -1;
+        //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //cube.transform.position = endPos.transform.position;
+        //cube.transform.localScale = cube.transform.localScale * 0.1f;
+        //print("endPos : " + endPos.transform.position);
+
+        GameObject anchorPos = new GameObject();
+        anchorPos.transform.position = previewStartPoint.transform.position + dir * (dist / 2f);
+        anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, anchorPos.transform.position.y - 3f, anchorPos.transform.position.z);
+        //GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //cube2.transform.position = anchorPos.transform.position;
+        //print("anchorPos : " + anchorPos.transform.position);
+
+        for (int i = 1; i < stepSize; i++)
         {
-            for (int j = 0; j < layers; j++)//9
-            {
-                for (int o = 0; o < verticesPerPoint; o++, k++)//5
-                {
-                    //2 * 7 * 5 = 70
-                    //3 * 9 * 5 = 135
-                    if ((c == 3 && layers == 0) || (c == 4 && layers == layers - 1) || (c == 3 && layers == layers - 1) || (c == 4 && layers == 0)) { break; }
-                    Vector3 p;
-                    float r = pipeRadius * Mathf.Cos(o * vStep);
-                    p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
-                    p.y = pipePoints[j].transform.position.y + (r * Mathf.Cos(0f));
-                    p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
-                    var vPos = p;
-                    pipeVertices[k] = vPos;
-                    //print(k);
-
-                    Quaternion q = pipePoints[j].transform.rotation;
-                    pipeVertices[k] = q * (pipeVertices[k] - pipePoints[j].transform.position) + pipePoints[j].transform.position;
-                }
-            }
+            Vector3 p0 = Vector3.Lerp(startPos.transform.position, anchorPos.transform.position, i * (1f / stepSize));
+            //print("p0 " + p0);
+            Vector3 p1 = Vector3.Lerp(anchorPos.transform.position, endPos.transform.position, i * (1f / stepSize));
+            //print("p1 " + p1);
+            Vector3 p2 = Vector3.Lerp(p0, p1, i * (1f / stepSize));
+            //print("p2 " + p2);
+            //GameObject cube3 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //cube3.transform.position = p2;
+            //cube3.transform.localScale = cube3.transform.localScale * 0.5f;
+            dir = (hit.point - p2).normalized;
+            GameObject pos = new GameObject();
+            pos.transform.position = p2;
+            pos.transform.right = dir * -1;
+            pipePoints.Add(pos);
+            GameObject dPos = new GameObject();
+            dPos.transform.position = p2;
+            dPos.transform.forward = dir * -1;
+            dirPoints.Add(dPos);
         }
-        
-        me.vertices = pipeVertices;
-
-        //triangles = new int[verticesPerPoint * layers * 6];
-        //for (int ti = 0, vi = 0, z = 0; z < layers - 1; z++, vi++)
-        //{
-        //    for (int x = 0; x < verticesPerPoint; x++, ti += 6)
-        //    {
-        //        if (x < verticesPerPoint - 1)
-        //        {
-        //            //how and why does the normal way not work
-        //            //so 2/3 and 1/4 switch to properly show the triangles
-        //            triangles[ti] = vi;
-        //            triangles[ti + 2] = triangles[ti + 3] = vi + 1;
-        //            triangles[ti + 1] = triangles[ti + 4] = vi + verticesPerPoint;
-        //            triangles[ti + 5] = vi + verticesPerPoint + 1;
-        //            vi++;
-        //            me.triangles = triangles;
-        //        }
-        //        else
-        //        {
-        //            triangles[ti] = vi;
-        //            triangles[ti + 2] = vi - verticesPerPoint + 1;
-        //            triangles[ti + 1] = vi + verticesPerPoint;
-        //            triangles[ti + 4] = vi + verticesPerPoint;
-        //            triangles[ti + 3] = vi - verticesPerPoint + 1;
-        //            triangles[ti + 5] = vi + 1;
-        //            me.triangles = triangles;
-        //        }
-        //    }
-        //}
-        //me.triangles = triangles;
-        //me.RecalculateNormals();
+        pipePoints.Add(endPos);
+        SmoothPipeSpawnPoints();
+        pipePoints.Clear();
+        dirPoints.Clear();      
     }
+
 }

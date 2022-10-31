@@ -9,35 +9,39 @@ public class CubicCurves : MonoBehaviour
     public List<GameObject> pipePoints = new List<GameObject>();
     public List<GameObject> dirPoints = new List<GameObject>();
     public GameObject pipe;
+    public GameObject previewPipe;
     // Start is called before the first frame update
     void Start()
     {
-        
+        PreviewPipe prevPipe = previewPipe.GetComponent<PreviewPipe>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Set position
-        if (Input.GetMouseButtonUp(0))
+        //Set position      
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit) && StartPoint != null) 
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) && StartPoint != null) 
+            if (Input.GetMouseButtonUp(0)) 
             {
                 Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
                 //MakePipe(ray, hit);
                 MakeCurve(ray, hit);
             }
+                
         }
+        
         if (Input.GetMouseButtonUp(1))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            //Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit2))
             {
-                if (hit.transform.tag == "StartPoint")
+                if (hit2.transform.tag == "StartPoint")
                 {
-                    StartPoint = hit.transform.gameObject;
+                    StartPoint = hit2.transform.gameObject;
+                    previewPipe.SetActive(true);
                 }
             }
         }
@@ -77,6 +81,7 @@ public class CubicCurves : MonoBehaviour
         gp.dirPoints.AddRange(dirPoints);
         pipePoints.Clear();
         dirPoints.Clear();
+        StartPoint = null;
     }
 
     void MakeCurve(Ray ray, RaycastHit hit)
@@ -139,5 +144,8 @@ public class CubicCurves : MonoBehaviour
         gp.dirPoints.AddRange(dirPoints);
         pipePoints.Clear();
         dirPoints.Clear();
+        StartPoint = null;
+        previewPipe.SetActive(false);
+        //gp.SmoothPipeSpawnPoints();
     }
 }

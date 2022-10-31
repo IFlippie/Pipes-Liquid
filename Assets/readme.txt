@@ -10,8 +10,6 @@ this doesnt solve the issue of what if the curve should be curved upwards instea
 
 based on the anchor we will be able to set it to up, down, left, right and it won't be solely the middle point but we can start the anchor in the middle
 
-calculating the direction again FOR EACH pipe part that has moved because of the curve
-
 PREVIEWING IMPLEMENTATION:
 
 always showing a preview when trying to create a pipe, so do this when start point is selected and implement this by having a seperate preview mesh
@@ -27,5 +25,3 @@ add color for when it's possible or not possible to place said pipe, do this by 
 make mesh for starting and end points
 double the vertices to get flat shading by making every triangle with unique vertices
 add flowmap shader to simulate liquid inside pipe
-
-
