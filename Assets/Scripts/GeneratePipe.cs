@@ -18,6 +18,7 @@ public class GeneratePipe : MonoBehaviour
     public int verticesPerPoint;
     //Distance between the vertices in each layer
     public float pipeRadius;
+    public GameObject endPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -115,15 +116,20 @@ public class GeneratePipe : MonoBehaviour
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
 
         //first part represents the amount of vertices in start and finish, second part represents all the vertices inbetween
-        //is this correct???
+        //is this correct???             5 * 3 = 15 * 2 = 30                       5 * 7 = 35 * 5 = 175
         pipeVertices = new Vector3[(2 * (verticesPerPoint * 3)) + ((verticesPerPoint * (layers-2)) * 5)];
-        //print(pipeVertices.Length);
-        for (int k = 0, c = 0; c < 2; c++)
+        print("verticesperpoint " + verticesPerPoint);
+        print("layers " + layers);
+        print(pipeVertices.Length);//205
+        for (int k = 0, c = 0; c < 4; c++)//5
         {
-            for (int j = 0; j < layers; j++)
+            for (int j = 0; j < layers; j++)//9
             {
-                for (int o = 0; o < verticesPerPoint; o++, k++)
+                for (int o = 0; o < verticesPerPoint; o++, k++)//5
                 {
+                    //2 * 7 * 5 = 70
+                    //3 * 9 * 5 = 135
+                    if ((c == 3 && layers == 0) || (c == 4 && layers == layers - 1) || (c == 3 && layers == layers - 1) || (c == 4 && layers == 0)) { break; }
                     Vector3 p;
                     float r = pipeRadius * Mathf.Cos(o * vStep);
                     p.x = pipePoints[j].transform.position.x + (r * Mathf.Sin(0f));
@@ -131,6 +137,7 @@ public class GeneratePipe : MonoBehaviour
                     p.z = pipePoints[j].transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
                     var vPos = p;
                     pipeVertices[k] = vPos;
+                    //print(k);
 
                     Quaternion q = pipePoints[j].transform.rotation;
                     pipeVertices[k] = q * (pipeVertices[k] - pipePoints[j].transform.position) + pipePoints[j].transform.position;
@@ -140,35 +147,35 @@ public class GeneratePipe : MonoBehaviour
         
         me.vertices = pipeVertices;
 
-        triangles = new int[verticesPerPoint * layers * 6];
-        for (int ti = 0, vi = 0, z = 0; z < layers - 1; z++, vi++)
-        {
-            for (int x = 0; x < verticesPerPoint; x++, ti += 6)
-            {
-                if (x < verticesPerPoint - 1)
-                {
-                    //how and why does the normal way not work
-                    //so 2/3 and 1/4 switch to properly show the triangles
-                    triangles[ti] = vi;
-                    triangles[ti + 2] = triangles[ti + 3] = vi + 1;
-                    triangles[ti + 1] = triangles[ti + 4] = vi + verticesPerPoint;
-                    triangles[ti + 5] = vi + verticesPerPoint + 1;
-                    vi++;
-                    me.triangles = triangles;
-                }
-                else
-                {
-                    triangles[ti] = vi;
-                    triangles[ti + 2] = vi - verticesPerPoint + 1;
-                    triangles[ti + 1] = vi + verticesPerPoint;
-                    triangles[ti + 4] = vi + verticesPerPoint;
-                    triangles[ti + 3] = vi - verticesPerPoint + 1;
-                    triangles[ti + 5] = vi + 1;
-                    me.triangles = triangles;
-                }
-            }
-        }
-        me.triangles = triangles;
-        me.RecalculateNormals();
+        //triangles = new int[verticesPerPoint * layers * 6];
+        //for (int ti = 0, vi = 0, z = 0; z < layers - 1; z++, vi++)
+        //{
+        //    for (int x = 0; x < verticesPerPoint; x++, ti += 6)
+        //    {
+        //        if (x < verticesPerPoint - 1)
+        //        {
+        //            //how and why does the normal way not work
+        //            //so 2/3 and 1/4 switch to properly show the triangles
+        //            triangles[ti] = vi;
+        //            triangles[ti + 2] = triangles[ti + 3] = vi + 1;
+        //            triangles[ti + 1] = triangles[ti + 4] = vi + verticesPerPoint;
+        //            triangles[ti + 5] = vi + verticesPerPoint + 1;
+        //            vi++;
+        //            me.triangles = triangles;
+        //        }
+        //        else
+        //        {
+        //            triangles[ti] = vi;
+        //            triangles[ti + 2] = vi - verticesPerPoint + 1;
+        //            triangles[ti + 1] = vi + verticesPerPoint;
+        //            triangles[ti + 4] = vi + verticesPerPoint;
+        //            triangles[ti + 3] = vi - verticesPerPoint + 1;
+        //            triangles[ti + 5] = vi + 1;
+        //            me.triangles = triangles;
+        //        }
+        //    }
+        //}
+        //me.triangles = triangles;
+        //me.RecalculateNormals();
     }
 }
