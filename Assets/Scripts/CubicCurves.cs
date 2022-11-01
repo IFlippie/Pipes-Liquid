@@ -110,7 +110,7 @@ public class CubicCurves : MonoBehaviour
 
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = StartPoint.transform.position + dir * (dist / 2f);
-        anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, anchorPos.transform.position.y - 3f, anchorPos.transform.position.z);
+        anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
         //GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //cube2.transform.position = anchorPos.transform.position;
         //print("anchorPos : " + anchorPos.transform.position);
