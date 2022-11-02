@@ -41,6 +41,7 @@ public class Curves : MonoBehaviour
         //https://blog.nobel-joergensen.com/2010/12/25/procedural-generated-mesh-in-unity/
         //https://docs.unity3d.com/Manual/QuaternionAndEulerRotationsInUnity.html
         //https://docs.unity3d.com/ScriptReference/Transform-right.html
+        //https://en.wikipedia.org/wiki/Gimbal_lock
     }
 
     // Update is called once per frame

@@ -146,7 +146,7 @@ public class PreviewPipe : MonoBehaviour
         //startPos.transform.position = previewStartPoint.transform.position;
         startPos.transform.position = previewStartPoint.transform.position + dir;
         startPos.transform.right = dir * -1;
-        //rotation = Quaternion.LookRotation(dir + startPos.transform.right, startPos.transform.up);
+        //rotation = Quaternion.LookRotation(dir + startPos.transform.right, Vector3.Cross(startPos.transform.forward, dir*-1));
         //startPos.transform.rotation = rotation;
         pipePoints.Add(startPos);
         //GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -157,7 +157,7 @@ public class PreviewPipe : MonoBehaviour
         GameObject endPos = new GameObject();
         endPos.transform.position = hit.point;
         endPos.transform.right = dir * -1;
-        //rotation = Quaternion.LookRotation(dir + endPos.transform.right, endPos.transform.up);
+        //rotation = Quaternion.LookRotation(dir + endPos.transform.right, Vector3.Cross(endPos.transform.forward, dir * -1));
         //endPos.transform.rotation = rotation;
         //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //cube.transform.position = endPos.transform.position;
@@ -180,7 +180,7 @@ public class PreviewPipe : MonoBehaviour
             GameObject pos = new GameObject();
             pos.transform.position = p2;
             pos.transform.right = dir * -1;
-            //rotation = Quaternion.LookRotation(dir + pos.transform.right, pos.transform.up);
+            //rotation = Quaternion.LookRotation(dir + pos.transform.right, Vector3.Cross(pos.transform.forward, dir * -1));
             //pos.transform.rotation = rotation;
             pipePoints.Add(pos);
             GameObject dPos = new GameObject();
