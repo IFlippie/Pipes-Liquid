@@ -16,7 +16,9 @@ should be easy as just spawning a new starting point at the end of the generated
 
 WRITE DOCUMENT
 CODE CLEANUP
-ONE BUG RELATED TO THE VERTICES ROTATION WHEN GOING STRAIGHT IN THE X DIRECTION
+ONE BUG RELATED TO THE VERTICES ROTATION WHEN GOING STRAIGHT IN THE X DIRECTION(gimbal lock)
+maybe fixable by having transform.right replaced with forward or up but would require vertices code changes
+or maybe use forward with quaternions(set)lookrotation
 
 EXTRA FOR ART POINTS:
 

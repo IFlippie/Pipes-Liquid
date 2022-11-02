@@ -140,11 +140,14 @@ public class PreviewPipe : MonoBehaviour
         float dist = Vector3.Distance(previewStartPoint.transform.position, hit.point);
         float stepDist = dist / stepSize;
         Vector3 dir = (hit.point - previewStartPoint.transform.position).normalized;
+        //Quaternion rotation;
 
         GameObject startPos = new GameObject();
-        startPos.transform.position = previewStartPoint.transform.position;
-        //startPos.transform.position = StartPoint.transform.position + dir;
+        //startPos.transform.position = previewStartPoint.transform.position;
+        startPos.transform.position = previewStartPoint.transform.position + dir;
         startPos.transform.right = dir * -1;
+        //rotation = Quaternion.LookRotation(dir + startPos.transform.right, startPos.transform.up);
+        //startPos.transform.rotation = rotation;
         pipePoints.Add(startPos);
         //GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //cube1.transform.position = startPos.transform.position;
@@ -154,6 +157,8 @@ public class PreviewPipe : MonoBehaviour
         GameObject endPos = new GameObject();
         endPos.transform.position = hit.point;
         endPos.transform.right = dir * -1;
+        //rotation = Quaternion.LookRotation(dir + endPos.transform.right, endPos.transform.up);
+        //endPos.transform.rotation = rotation;
         //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //cube.transform.position = endPos.transform.position;
         //cube.transform.localScale = cube.transform.localScale * 0.1f;
@@ -175,6 +180,8 @@ public class PreviewPipe : MonoBehaviour
             GameObject pos = new GameObject();
             pos.transform.position = p2;
             pos.transform.right = dir * -1;
+            //rotation = Quaternion.LookRotation(dir + pos.transform.right, pos.transform.up);
+            //pos.transform.rotation = rotation;
             pipePoints.Add(pos);
             GameObject dPos = new GameObject();
             dPos.transform.position = p2;
