@@ -39,6 +39,7 @@ public class Curves : MonoBehaviour
         //https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
         //https://hextantstudios.com/unity-flat-low-poly-shader/
         //https://blog.nobel-joergensen.com/2010/12/25/procedural-generated-mesh-in-unity/
+        //https://docs.unity3d.com/Manual/QuaternionAndEulerRotationsInUnity.html
     }
 
     // Update is called once per frame
