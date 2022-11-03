@@ -42,6 +42,7 @@ public class CubicCurves : MonoBehaviour
                 {
                     StartPoint = hit2.transform.gameObject;
                     previewPipe.SetActive(true);
+                    previewPipe.GetComponent<PreviewPipe>().extender.SetActive(true);
                 }
             }
         }
@@ -146,6 +147,7 @@ public class CubicCurves : MonoBehaviour
         dirPoints.Clear();
         StartPoint = null;
         previewPipe.SetActive(false);
+        previewPipe.GetComponent<PreviewPipe>().extender.SetActive(false);
         //gp.SmoothPipeSpawnPoints();
     }
 }

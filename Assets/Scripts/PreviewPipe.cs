@@ -19,6 +19,7 @@ public class PreviewPipe : MonoBehaviour
     //Distance between the vertices in each layer
     public float pipeRadius;
     public CubicCurves cubicCurves;
+    public GameObject extender;
     GameObject previewStartPoint;
     float stepSize;
     Renderer rend;
@@ -144,8 +145,8 @@ public class PreviewPipe : MonoBehaviour
 
         GameObject startPos = new GameObject();
         //startPos.transform.position = previewStartPoint.transform.position;
-        startPos.transform.position = previewStartPoint.transform.position + dir;
-        startPos.transform.right = dir * -1;
+        startPos.transform.position = previewStartPoint.transform.position + (previewStartPoint.transform.forward *0.35f) + (previewStartPoint.transform.up * 0.75f);
+        startPos.transform.right = -previewStartPoint.transform.forward;
         //rotation = Quaternion.LookRotation(dir + startPos.transform.right, Vector3.Cross(startPos.transform.forward, dir*-1));
         //startPos.transform.rotation = rotation;
         pipePoints.Add(startPos);
@@ -155,8 +156,11 @@ public class PreviewPipe : MonoBehaviour
         //print("startPos : " + startPos.transform.position);
 
         GameObject endPos = new GameObject();
-        endPos.transform.position = hit.point;
-        endPos.transform.right = dir * -1;
+        extender.transform.position = hit.point + (Vector3.up * 1.48f);
+        extender.transform.forward = dir;
+        //endPos.transform.position = hit.point + (Vector3.up*2f);
+        endPos.transform.position = extender.transform.position - (extender.transform.forward * 0.35f) + (previewStartPoint.transform.up * 0.75f);
+        endPos.transform.right = dir * -1;       
         //rotation = Quaternion.LookRotation(dir + endPos.transform.right, Vector3.Cross(endPos.transform.forward, dir * -1));
         //endPos.transform.rotation = rotation;
         //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
