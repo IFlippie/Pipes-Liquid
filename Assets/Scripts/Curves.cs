@@ -30,18 +30,20 @@ public class Curves : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //https://catlikecoding.com/unity/tutorials/curves-and-splines/
-        //https://www.youtube.com/watch?v=RF04Fi9OCPc
-        //https://docs.unity3d.com/ScriptReference/ExecuteInEditMode.html
-        //https://youtu.be/yDFQIyEpJfw
-        //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
-        //https://catlikecoding.com/unity/tutorials/swirly-pipe/
-        //https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
-        //https://hextantstudios.com/unity-flat-low-poly-shader/
-        //https://blog.nobel-joergensen.com/2010/12/25/procedural-generated-mesh-in-unity/
-        //https://docs.unity3d.com/Manual/QuaternionAndEulerRotationsInUnity.html
-        //https://docs.unity3d.com/ScriptReference/Transform-right.html
-        //https://en.wikipedia.org/wiki/Gimbal_lock
+    //https://catlikecoding.com/unity/tutorials/curves-and-splines/
+    //https://www.youtube.com/watch?v=RF04Fi9OCPc
+    //https://docs.unity3d.com/ScriptReference/ExecuteInEditMode.html
+    //https://youtu.be/yDFQIyEpJfw
+    //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
+    //https://catlikecoding.com/unity/tutorials/swirly-pipe/
+    //https://catlikecoding.com/unity/tutorials/advanced-rendering/flat-and-wireframe-shading/
+    //https://hextantstudios.com/unity-flat-low-poly-shader/
+    //https://blog.nobel-joergensen.com/2010/12/25/procedural-generated-mesh-in-unity/
+    //https://docs.unity3d.com/Manual/QuaternionAndEulerRotationsInUnity.html
+    //https://docs.unity3d.com/ScriptReference/Transform-right.html
+    //https://en.wikipedia.org/wiki/Gimbal_lock
+    //https://docs.unity3d.com/ScriptReference/Transform.Rotate.html
+    //https://answers.unity.com/questions/187506/add-90-degrees-to-transformrotation.html
     }
 
     // Update is called once per frame
