@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - StartPoint
+  - PreviewPoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Preview
   - Water
   - UI
   - 

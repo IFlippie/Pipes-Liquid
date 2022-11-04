@@ -13,6 +13,7 @@ public class PreviewPipe : MonoBehaviour
     public List<GameObject> pipePoints = new List<GameObject>();
     [HideInInspector]
     public List<GameObject> dirPoints = new List<GameObject>();
+    public LayerMask ignore;
 
     [Header("Pipe")]
     public int verticesPerPoint;
@@ -54,6 +55,7 @@ public class PreviewPipe : MonoBehaviour
             Vector3 dir = (hit.point - previewStartPoint.transform.position).normalized;
             if (Physics.Raycast(previewStartPoint.transform.position, dir, out RaycastHit upHit, 100f)) 
             {
+                //Debug.DrawRay(previewStartPoint.transform.position, dir*1000f, Color.green, 1000f);
                 if (upHit.point != hit.point)
                 {
                     rend.material.SetColor("_Color", red);
@@ -174,11 +176,16 @@ public class PreviewPipe : MonoBehaviour
         //endCube.transform.position = endPos.transform.position;
         //endCube.transform.rotation = endPos.transform.rotation;
         //endCube.transform.localScale = endCube.transform.localScale * 0.1f;
-        print("endPos : " + endPos.transform.rotation);
+        
+        //print("endPos : " + endPos.transform.rotation);
+
 
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = previewStartPoint.transform.position + dir * (dist / 2f);
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
+        Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
+        print("Angle: " + angle);
         //GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //cube2.transform.position = anchorPos.transform.position;
         //print("anchorPos : " + anchorPos.transform.position);
