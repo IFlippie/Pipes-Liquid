@@ -45,6 +45,7 @@ public class Curves : MonoBehaviour
         //https://docs.unity3d.com/ScriptReference/Transform.Rotate.html
         //https://answers.unity.com/questions/187506/add-90-degrees-to-transformrotation.html
         //https://docs.unity3d.com/ScriptReference/Quaternion.LookRotation.html
+        //https://gamedev.stackexchange.com/questions/173956/unity3d-position-a-gameobject-such-that-its-forms-a-right-angled-triangle-with
     }
 
     // Update is called once per frame

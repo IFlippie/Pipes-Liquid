@@ -186,11 +186,16 @@ public class PreviewPipe : MonoBehaviour
         Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
         float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
         //print("Angle: " + angle);
-        //var zDiff = (endPos.transform.position.z - startPos.transform.position.z) / 90;
+        //var zDiff = (endPos.transform.position.z - startPos.transform.position.z);
         //if (angle > 0f && angle < 90f)
         //{
         //    anchorPos.transform.position = anchorPos.transform.position - startPos.transform.forward * (zDiff * angle);
         //}
+        Vector3 bInAsSpace = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        Vector3 cInAsSpace = new Vector3(bInAsSpace.x, 0, 0);
+        Vector3 cInWordSpace = startPos.transform.TransformPoint(cInAsSpace);
+        print(cInWordSpace);
+        anchorPos.transform.position = cInWordSpace;
         //print("project: " + Vector3.Cross(endPos.transform.position, startPos.transform.position).normalized);
         //print("project: " + Vector3.Project(dir2, startPos.transform.position));
         //Vector3 differenceDirection = startPos.transform.forward;
