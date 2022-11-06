@@ -10,6 +10,8 @@ this helps with the anchor placement for example angle from startingpoint(forwar
 
 for left and right the check would be to see if from the startingpoint the angle is and if it succeeds that then move the anchor based on that angle
 
+if the angle increases increase the forward upto 90 at which point it should be equal 
+
 JUST IMPLEMENTING THE ANGLE RELATED ANCHOR IS THE FINAL TASK
 
 FULL FOCUS ON JUST THE EXTENDER AND BEZIER CURVE
