@@ -32,7 +32,6 @@ public class Curves : MonoBehaviour
     {
         //https://catlikecoding.com/unity/tutorials/curves-and-splines/
         //https://www.youtube.com/watch?v=RF04Fi9OCPc
-        //https://docs.unity3d.com/ScriptReference/ExecuteInEditMode.html
         //https://youtu.be/yDFQIyEpJfw
         //https://en.wikibooks.org/wiki/Cg_Programming/Unity/B%C3%A9zier_Curves
         //https://catlikecoding.com/unity/tutorials/swirly-pipe/
@@ -46,6 +45,8 @@ public class Curves : MonoBehaviour
         //https://answers.unity.com/questions/187506/add-90-degrees-to-transformrotation.html
         //https://docs.unity3d.com/ScriptReference/Quaternion.LookRotation.html
         //https://gamedev.stackexchange.com/questions/173956/unity3d-position-a-gameobject-such-that-its-forms-a-right-angled-triangle-with
+
+        //https://www.gamedeveloper.com/business/how-to-work-with-bezier-curve-in-games-with-unity
     }
 
     // Update is called once per frame

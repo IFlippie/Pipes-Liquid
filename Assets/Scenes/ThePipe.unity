@@ -892,7 +892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1854399124
 Transform:
   m_ObjectHideFlags: 0
@@ -920,9 +920,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - {x: 1, y: 1.4765525, z: 0}
-  - {x: 1.5232182, y: -0.68925595, z: 0.37646127}
-  - {x: 3.96, y: 0.29758513, z: 0}
+  - {x: 1, y: 1, z: -3}
+  - {x: 1, y: 0, z: -3}
+  - {x: -0.8100678, y: 0, z: -3}
 --- !u!1 &919132147799730130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4098463025628257960, guid: fe3c223696dd217418c9560eaa1abc1b, type: 3}

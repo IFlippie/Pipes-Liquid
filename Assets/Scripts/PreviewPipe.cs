@@ -183,19 +183,20 @@ public class PreviewPipe : MonoBehaviour
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = previewStartPoint.transform.position + dir * (dist / 2f);
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
-        Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
-        float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
+        //Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        //float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
         //print("Angle: " + angle);
+
         //var zDiff = (endPos.transform.position.z - startPos.transform.position.z);
         //if (angle > 0f && angle < 90f)
         //{
         //    anchorPos.transform.position = anchorPos.transform.position - startPos.transform.forward * (zDiff * angle);
         //}
-        Vector3 bInAsSpace = startPos.transform.InverseTransformPoint(endPos.transform.position);
-        Vector3 cInAsSpace = new Vector3(bInAsSpace.x, 0, 0);
-        Vector3 cInWordSpace = startPos.transform.TransformPoint(cInAsSpace);
-        print(cInWordSpace);
-        anchorPos.transform.position = cInWordSpace;
+        Vector3 relativeEnd = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        Vector3 relativePos = new Vector3(relativeEnd.x, 0, 0);
+        Vector3 newWorldPos = startPos.transform.TransformPoint(relativePos);
+        print(newWorldPos);
+        anchorPos.transform.position = newWorldPos;
         //print("project: " + Vector3.Cross(endPos.transform.position, startPos.transform.position).normalized);
         //print("project: " + Vector3.Project(dir2, startPos.transform.position));
         //Vector3 differenceDirection = startPos.transform.forward;

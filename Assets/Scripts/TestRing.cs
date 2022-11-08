@@ -28,9 +28,11 @@ public class TestRing : MonoBehaviour
         {
             Vector3 p;
             float r = pipeRadius * Mathf.Cos(o * vStep);
-            p.x = transform.position.x + (r * Mathf.Sin(0f));
+            //X does nothing in our example
+            //p.x = transform.position.x + (r * Mathf.Sin(0f));
             p.y = transform.position.y + (r * Mathf.Cos(0f));
             p.z = transform.position.z + (pipeRadius * Mathf.Sin(o * vStep));
+            p.x = 0;
             var vPos = p;
             pipeVertices[o] = vPos;
 
@@ -42,12 +44,12 @@ public class TestRing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int o = 0; o < verticesPerPoint; o++)
-        {
-            Quaternion q = Quaternion.Euler(x, 1f, z);
-            pipeVertices[o] = q * (pipeVertices[o] - transform.position) + transform.position;
+        //for (int o = 0; o < verticesPerPoint; o++)
+        //{
+        //    Quaternion q = Quaternion.Euler(x, 1f, z);
+        //    pipeVertices[o] = q * (pipeVertices[o] - transform.position) + transform.position;
 
-            points[o].transform.position = pipeVertices[o];
-        }
+        //    points[o].transform.position = pipeVertices[o];
+        //}
     }
 }
