@@ -1,10 +1,4 @@
-have the extender work with the generatepipe because now it just works with preview
-
-fix preview rotation on extender
-
 fix preview color(updating the pipe check for it to work with the updated features)
-
-CODE CLEANUP
 
 GENERAL EXTRA:
 
