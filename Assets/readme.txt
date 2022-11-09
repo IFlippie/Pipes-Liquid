@@ -2,11 +2,9 @@ have the extender work with the generatepipe because now it just works with prev
 
 fix preview rotation on extender
 
-WRITE DOCUMENT
+fix preview color(updating the pipe check for it to work with the updated features)
+
 CODE CLEANUP
-ONE BUG RELATED TO THE VERTICES ROTATION WHEN GOING STRAIGHT IN THE X DIRECTION(gimbal lock) FIXED!!!!!!
-
-
 
 GENERAL EXTRA:
 

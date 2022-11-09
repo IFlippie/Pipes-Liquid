@@ -10,6 +10,7 @@ public class CubicCurves : MonoBehaviour
     public List<GameObject> dirPoints = new List<GameObject>();
     public GameObject pipe;
     public GameObject previewPipe;
+    public GameObject extend;
     // Start is called before the first frame update
     void Start()
     {
@@ -86,39 +87,57 @@ public class CubicCurves : MonoBehaviour
 
     void MakeCurve(Ray ray, RaycastHit hit)
     {
+        GameObject extender = Instantiate(extend);
         float dist = Vector3.Distance(StartPoint.transform.position, hit.point);
         float stepDist = dist / stepSize;
         Vector3 dir = (hit.point - StartPoint.transform.position).normalized;
+        Vector3 dir2 = (hit.point - StartPoint.transform.position);
+        Quaternion rotation;
 
         GameObject startPos = new GameObject();
-        startPos.transform.position = StartPoint.transform.position;
-        startPos.transform.right = dir * -1;
+        startPos.transform.position = StartPoint.transform.position + (StartPoint.transform.forward * 0.35f) + (StartPoint.transform.up * 0.75f);
+        startPos.transform.right = -StartPoint.transform.forward;
         pipePoints.Add(startPos);
 
         GameObject endPos = new GameObject();
-        endPos.transform.position = hit.point;
-        endPos.transform.right = dir * -1;
+        extender.transform.position = hit.point + (Vector3.up * 1.48f);
+        extender.transform.forward = dir;
+        endPos.transform.position = extender.transform.position - (extender.transform.forward * 0.35f) + (StartPoint.transform.up * 0.75f);
+        rotation = Quaternion.LookRotation(dir2);
+        rotation *= Quaternion.Euler(0, 90, 0);
+        endPos.transform.rotation = rotation;
+
 
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = StartPoint.transform.position + dir * (dist / 2f);
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
 
+        Vector3 relativeEnd = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        Vector3 relativePos = new Vector3(relativeEnd.x, 0, 0);
+        Vector3 newWorldPos = startPos.transform.TransformPoint(relativePos);
+        //print(newWorldPos);
+        anchorPos.transform.position = newWorldPos;
+
         for (int i = 1; i < stepSize; i++)
         {
-            Vector3 p0 = Vector3.Lerp(startPos.transform.position, anchorPos.transform.position, i*(1f/stepSize));
+            Vector3 p0 = Vector3.Lerp(startPos.transform.position, anchorPos.transform.position, i * (1f / stepSize));
             Vector3 p1 = Vector3.Lerp(anchorPos.transform.position, endPos.transform.position, i * (1f / stepSize));
             Vector3 p2 = Vector3.Lerp(p0, p1, i * (1f / stepSize));
             dir = (hit.point - p2).normalized;
+            //var dir3 = (hit.point - p2);
             GameObject pos = new GameObject();
             pos.transform.position = p2;
-            pos.transform.right = dir * -1;
+            rotation = Quaternion.LookRotation(dir2);
+            rotation *= Quaternion.Euler(0, 90, 0);
+            pos.transform.rotation = rotation;
             pipePoints.Add(pos);
-            GameObject dPos = new GameObject();
-            dPos.transform.position = p2;
-            dPos.transform.forward = dir * -1;
-            dirPoints.Add(dPos);
+            //GameObject dPos = new GameObject();
+            //dPos.transform.position = p2;
+            //dPos.transform.forward = dir * -1;
+            //dirPoints.Add(dPos);
         }
         pipePoints.Add(endPos);
+        //extender.transform.forward = endPos.transform.right;
 
         GameObject spawnedPipe = Instantiate(pipe);
         GeneratePipe gp = spawnedPipe.GetComponent<GeneratePipe>();
@@ -126,6 +145,7 @@ public class CubicCurves : MonoBehaviour
         gp.dirPoints.AddRange(dirPoints);
         pipePoints.Clear();
         dirPoints.Clear();
+        StartPoint.tag = null;
         StartPoint = null;
         previewPipe.SetActive(false);
         previewPipe.GetComponent<PreviewPipe>().extender.SetActive(false);

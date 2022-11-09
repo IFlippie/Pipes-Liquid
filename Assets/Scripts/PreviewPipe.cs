@@ -169,7 +169,7 @@ public class PreviewPipe : MonoBehaviour
         Vector3 relativeEnd = startPos.transform.InverseTransformPoint(endPos.transform.position);
         Vector3 relativePos = new Vector3(relativeEnd.x, 0, 0);
         Vector3 newWorldPos = startPos.transform.TransformPoint(relativePos);
-        print(newWorldPos);
+        //print(newWorldPos);
         anchorPos.transform.position = newWorldPos;
 
         for (int i = 1; i < stepSize; i++)
@@ -178,18 +178,21 @@ public class PreviewPipe : MonoBehaviour
             Vector3 p1 = Vector3.Lerp(anchorPos.transform.position, endPos.transform.position, i * (1f / stepSize));
             Vector3 p2 = Vector3.Lerp(p0, p1, i * (1f / stepSize));
             dir = (hit.point - p2).normalized;
+            //var dir3 = (hit.point - p2);
             GameObject pos = new GameObject();
             pos.transform.position = p2;
             rotation = Quaternion.LookRotation(dir2);
             rotation *= Quaternion.Euler(0, 90, 0);
             pos.transform.rotation = rotation;
             pipePoints.Add(pos);
-            GameObject dPos = new GameObject();
-            dPos.transform.position = p2;
-            dPos.transform.forward = dir * -1;
-            dirPoints.Add(dPos);
+            //GameObject dPos = new GameObject();
+            //dPos.transform.position = p2;
+            //dPos.transform.forward = dir * -1;
+            //dirPoints.Add(dPos);
         }
         pipePoints.Add(endPos);
+        extender.transform.forward = endPos.transform.right;
+
         SmoothPipeSpawnPoints();
         for (int p = 0; p < pipePoints.Count; p++)
         {
