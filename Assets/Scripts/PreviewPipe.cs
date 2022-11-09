@@ -22,6 +22,7 @@ public class PreviewPipe : MonoBehaviour
     public CubicCurves cubicCurves;
     public GameObject extender;
     public bool canBeCreated;
+    public bool canBeLined;
     GameObject previewStartPoint;
     float stepSize;
     Renderer rend;
@@ -58,10 +59,13 @@ public class PreviewPipe : MonoBehaviour
             {
                 //Debug.DrawRay(previewStartPoint.transform.position, dir*1000f, Color.green, 1000f);
                 if (upHit.point != hit.point)
+                { canBeLined = false; }
+                else { canBeLined = true; }
+                if (canBeCreated && canBeLined)
                 {
-                    rend.material.SetColor("_Color", red);
+                    rend.material.SetColor("_Color", green);
                 }
-                else { rend.material.SetColor("_Color", green); }
+                else { rend.material.SetColor("_Color", red); }
             }
             MakeCurve(ray, hit);
         }
@@ -143,7 +147,9 @@ public class PreviewPipe : MonoBehaviour
 
         GameObject startPos = new GameObject();
         startPos.transform.position = previewStartPoint.transform.position + (previewStartPoint.transform.forward *0.35f) + (previewStartPoint.transform.up * 0.75f);
-        startPos.transform.right = -previewStartPoint.transform.forward;
+        //startPos.transform.right = -previewStartPoint.transform.forward;
+        startPos.transform.rotation = previewStartPoint.transform.rotation;
+        startPos.transform.rotation *= Quaternion.Euler(0, 90, 0);
         pipePoints.Add(startPos);
 
         GameObject endPos = new GameObject();
@@ -160,12 +166,13 @@ public class PreviewPipe : MonoBehaviour
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
         Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
         float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
-        //print("Angle: " + angle);
+        print("Angle: " + angle);
 
-        if (angle < 0f || angle > 90f)
+        if (angle < -80f || angle > 80f)
         {
             canBeCreated = false;
         }
+        else { canBeCreated = true; } 
         Vector3 relativeEnd = startPos.transform.InverseTransformPoint(endPos.transform.position);
         Vector3 relativePos = new Vector3(relativeEnd.x, 0, 0);
         Vector3 newWorldPos = startPos.transform.TransformPoint(relativePos);

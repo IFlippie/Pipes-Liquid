@@ -24,7 +24,7 @@ public class CubicCurves : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit) && StartPoint != null) 
         {
-            if (Input.GetMouseButtonUp(0)) 
+            if (Input.GetMouseButtonUp(0) && previewPipe.GetComponent<PreviewPipe>().canBeCreated && previewPipe.GetComponent<PreviewPipe>().canBeLined) 
             {
                 Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
@@ -45,6 +45,12 @@ public class CubicCurves : MonoBehaviour
                     previewPipe.GetComponent<PreviewPipe>().extender.SetActive(true);
                 }
             }
+        }
+        if (Input.GetKeyUp(KeyCode.R)) 
+        {
+            StartPoint = null;
+            previewPipe.SetActive(false);
+            previewPipe.GetComponent<PreviewPipe>().extender.SetActive(false);
         }
     }
     
@@ -96,7 +102,9 @@ public class CubicCurves : MonoBehaviour
 
         GameObject startPos = new GameObject();
         startPos.transform.position = StartPoint.transform.position + (StartPoint.transform.forward * 0.35f) + (StartPoint.transform.up * 0.75f);
-        startPos.transform.right = -StartPoint.transform.forward;
+        //startPos.transform.right = -StartPoint.transform.forward;
+        startPos.transform.rotation = StartPoint.transform.rotation;
+        startPos.transform.rotation *= Quaternion.Euler(0, 90, 0);
         pipePoints.Add(startPos);
 
         GameObject endPos = new GameObject();
@@ -145,7 +153,7 @@ public class CubicCurves : MonoBehaviour
         gp.dirPoints.AddRange(dirPoints);
         pipePoints.Clear();
         dirPoints.Clear();
-        StartPoint.tag = null;
+        StartPoint.tag = "Untagged";
         StartPoint = null;
         previewPipe.SetActive(false);
         previewPipe.GetComponent<PreviewPipe>().extender.SetActive(false);
