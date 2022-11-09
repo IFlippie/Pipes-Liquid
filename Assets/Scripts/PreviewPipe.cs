@@ -21,6 +21,7 @@ public class PreviewPipe : MonoBehaviour
     public float pipeRadius;
     public CubicCurves cubicCurves;
     public GameObject extender;
+    public bool canBeCreated;
     GameObject previewStartPoint;
     float stepSize;
     Renderer rend;
@@ -72,15 +73,9 @@ public class PreviewPipe : MonoBehaviour
         layers = pipePoints.Count;
         for (int i = 0; i < dirPoints.Count; i++)
         {
-            //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, Color.red, 10000f);
             //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, Color.red, 10000f);
-            //Debug.DrawRay(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, Color.red, 10000f);
-            //Debug.DrawRay(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, Color.red, 10000f);
 
-            //if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.up * 4f, out RaycastHit upHit)) { }
             //if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.up * 4f, out RaycastHit downHit)) { pipePoints[i + 1].transform.position += dirPoints[i].transform.up; }
-            //if (Physics.Raycast(dirPoints[i].transform.position, -dirPoints[i].transform.right * 4f, out RaycastHit leftHit)) { }
-            //if (Physics.Raycast(dirPoints[i].transform.position, dirPoints[i].transform.right * 4f, out RaycastHit rightHit)) { }
         }
 
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
@@ -147,65 +142,35 @@ public class PreviewPipe : MonoBehaviour
         Quaternion rotation;
 
         GameObject startPos = new GameObject();
-        //startPos.transform.position = previewStartPoint.transform.position;
         startPos.transform.position = previewStartPoint.transform.position + (previewStartPoint.transform.forward *0.35f) + (previewStartPoint.transform.up * 0.75f);
         startPos.transform.right = -previewStartPoint.transform.forward;
-        //rotation = Quaternion.LookRotation(dir + startPos.transform.right, Vector3.Cross(startPos.transform.forward, dir*-1));
-        //startPos.transform.rotation = rotation;
         pipePoints.Add(startPos);
-        //GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //cube1.transform.position = startPos.transform.position;
-        //cube1.transform.localScale = cube1.transform.localScale * 0.1f;
-        //print("startPos : " + startPos.transform.position);
 
         GameObject endPos = new GameObject();
         extender.transform.position = hit.point + (Vector3.up * 1.48f);
         extender.transform.forward = dir;
-        //endPos.transform.position = hit.point + (Vector3.up*2f);
         endPos.transform.position = extender.transform.position - (extender.transform.forward * 0.35f) + (previewStartPoint.transform.up * 0.75f);
-        //endPos.transform.right = dir * -1;
-        //endPos.transform.Rotate(dir*-1, Space.World);
         rotation = Quaternion.LookRotation(dir2);
         rotation *= Quaternion.Euler(0, 90, 0);
         endPos.transform.rotation = rotation;
-        //endPos.transform.rotation = Quaternion.LookRotation(dir2);
-        //endPos.transform.rotation = Quaternion.Euler(dir);
-        //rotation = Quaternion.LookRotation((dir *-1) +endPos.transform.up);
-        //endPos.transform.rotation = rotation;
-        //GameObject endCube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //endCube.transform.position = endPos.transform.position;
-        //endCube.transform.rotation = endPos.transform.rotation;
-        //endCube.transform.localScale = endCube.transform.localScale * 0.1f;
-        
-        //print("endPos : " + endPos.transform.rotation);
 
 
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = previewStartPoint.transform.position + dir * (dist / 2f);
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
-        //Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
-        //float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
+        Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
+        float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
         //print("Angle: " + angle);
 
-        //var zDiff = (endPos.transform.position.z - startPos.transform.position.z);
-        //if (angle > 0f && angle < 90f)
-        //{
-        //    anchorPos.transform.position = anchorPos.transform.position - startPos.transform.forward * (zDiff * angle);
-        //}
+        if (angle < 0f || angle > 90f)
+        {
+            canBeCreated = false;
+        }
         Vector3 relativeEnd = startPos.transform.InverseTransformPoint(endPos.transform.position);
         Vector3 relativePos = new Vector3(relativeEnd.x, 0, 0);
         Vector3 newWorldPos = startPos.transform.TransformPoint(relativePos);
         print(newWorldPos);
         anchorPos.transform.position = newWorldPos;
-        //print("project: " + Vector3.Cross(endPos.transform.position, startPos.transform.position).normalized);
-        //print("project: " + Vector3.Project(dir2, startPos.transform.position));
-        //Vector3 differenceDirection = startPos.transform.forward;
-        //float difference = Vector3.Dot(differenceDirection, endPos.transform.position - startPos.transform.position);
-        //print("difference: " + difference);
-
-        //GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //cube2.transform.position = anchorPos.transform.position;
-        //print("anchorPos : " + anchorPos.transform.position);
 
         for (int i = 1; i < stepSize; i++)
         {
@@ -215,16 +180,9 @@ public class PreviewPipe : MonoBehaviour
             dir = (hit.point - p2).normalized;
             GameObject pos = new GameObject();
             pos.transform.position = p2;
-            //pos.transform.right = dir * -1;
-            //pos.transform.Rotate(dir*-1, Space.World);
-            //pos.transform.rotation = Quaternion.LookRotation(dir2);
             rotation = Quaternion.LookRotation(dir2);
             rotation *= Quaternion.Euler(0, 90, 0);
             pos.transform.rotation = rotation;
-            //pos.transform.rotation = Quaternion.Euler((dir * -1) + pos.transform.right);
-            //pos.transform.rotation = Quaternion.LookRotation(dir + pos.transform.right, Vector3.up);
-            //rotation = Quaternion.LookRotation(dir + pos.transform.right);
-            //pos.transform.rotation = rotation;
             pipePoints.Add(pos);
             GameObject dPos = new GameObject();
             dPos.transform.position = p2;
@@ -242,7 +200,6 @@ public class PreviewPipe : MonoBehaviour
             Destroy(dirPoints[o]);
         }
         Destroy(anchorPos);
-        //Destroy(endCube);
         pipePoints.Clear();
         dirPoints.Clear();      
     }

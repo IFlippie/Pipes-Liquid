@@ -35,7 +35,6 @@ public class CubicCurves : MonoBehaviour
         
         if (Input.GetMouseButtonUp(1))
         {
-            //Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit2))
             {
                 if (hit2.transform.tag == "StartPoint")
@@ -93,40 +92,22 @@ public class CubicCurves : MonoBehaviour
 
         GameObject startPos = new GameObject();
         startPos.transform.position = StartPoint.transform.position;
-        //startPos.transform.position = StartPoint.transform.position + dir;
         startPos.transform.right = dir * -1;
         pipePoints.Add(startPos);
-        //GameObject cube1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //cube1.transform.position = startPos.transform.position;
-        //cube1.transform.localScale = cube1.transform.localScale * 0.1f;
-        //print("startPos : " + startPos.transform.position);
 
         GameObject endPos = new GameObject();
         endPos.transform.position = hit.point;
         endPos.transform.right = dir * -1;
-        //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //cube.transform.position = endPos.transform.position;
-        //cube.transform.localScale = cube.transform.localScale * 0.1f;
-        //print("endPos : " + endPos.transform.position);
 
         GameObject anchorPos = new GameObject();
         anchorPos.transform.position = StartPoint.transform.position + dir * (dist / 2f);
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
-        //GameObject cube2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //cube2.transform.position = anchorPos.transform.position;
-        //print("anchorPos : " + anchorPos.transform.position);
 
         for (int i = 1; i < stepSize; i++)
         {
             Vector3 p0 = Vector3.Lerp(startPos.transform.position, anchorPos.transform.position, i*(1f/stepSize));
-            //print("p0 " + p0);
             Vector3 p1 = Vector3.Lerp(anchorPos.transform.position, endPos.transform.position, i * (1f / stepSize));
-            //print("p1 " + p1);
             Vector3 p2 = Vector3.Lerp(p0, p1, i * (1f / stepSize));
-            //print("p2 " + p2);
-            //GameObject cube3 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            //cube3.transform.position = p2;
-            //cube3.transform.localScale = cube3.transform.localScale * 0.5f;
             dir = (hit.point - p2).normalized;
             GameObject pos = new GameObject();
             pos.transform.position = p2;
@@ -148,6 +129,5 @@ public class CubicCurves : MonoBehaviour
         StartPoint = null;
         previewPipe.SetActive(false);
         previewPipe.GetComponent<PreviewPipe>().extender.SetActive(false);
-        //gp.SmoothPipeSpawnPoints();
     }
 }
