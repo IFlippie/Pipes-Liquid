@@ -753,6 +753,10 @@ PrefabInstance:
       value: PreviewPipe
       objectReference: {fileID: 0}
     - target: {fileID: 761195775218569250, guid: ac3b4de9085350a458985c2e30f74e5a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 761195775218569250, guid: ac3b4de9085350a458985c2e30f74e5a, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

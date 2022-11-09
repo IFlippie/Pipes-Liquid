@@ -1,10 +1,8 @@
-fix preview color(updating the pipe check for it to work with the updated features)
-
 GENERAL EXTRA:
 
 would be applying the curve in y direction aswell
 updating the pipe check for it to work with the updated features
-and having the pipe bend slightly in situations where it would be able to curve around an object
+and having the pipe bend better in situations where it would be able to curve around an object
 
 EXTRA FOR ART POINTS:
 

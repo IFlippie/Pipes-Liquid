@@ -84,7 +84,6 @@ public class PreviewPipe : MonoBehaviour
 
         float vStep = (2f * Mathf.PI) / verticesPerPoint;
 
-
         pipeVertices = new Vector3[verticesPerPoint * layers];
         //print(pipeVertices.Length);
         for (int k = 0, j = 0; j < layers; j++)
@@ -166,7 +165,7 @@ public class PreviewPipe : MonoBehaviour
         anchorPos.transform.position = new Vector3(anchorPos.transform.position.x, endPos.transform.position.y, anchorPos.transform.position.z);
         Vector3 relative = startPos.transform.InverseTransformPoint(endPos.transform.position);
         float angle = (Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg) + 90f;
-        print("Angle: " + angle);
+        //print("Angle: " + angle);
 
         if (angle < -80f || angle > 80f)
         {
@@ -199,6 +198,19 @@ public class PreviewPipe : MonoBehaviour
         }
         pipePoints.Add(endPos);
         extender.transform.forward = endPos.transform.right;
+
+        //var collis = 0;
+        //for (int m = 0; m < pipePoints.Count-1; m++)
+        //{
+        //    float distance = Vector3.Distance(pipePoints[m].transform.position, pipePoints[m + 1].transform.position);
+        //    Vector3 direct = (pipePoints[m + 1].transform.position - pipePoints[m].transform.position).normalized;
+        //    Debug.DrawRay(pipePoints[m].transform.position, direct * distance, Color.red, 1f);
+            
+        //    if (Physics.Raycast(pipePoints[m].transform.position, direct,distance,ignore))
+        //        { collis++; }
+        //}
+        //print(collis);
+        //if (collis > 0) { canBeLined = false; } else { canBeLined = true; }
 
         SmoothPipeSpawnPoints();
         for (int p = 0; p < pipePoints.Count; p++)

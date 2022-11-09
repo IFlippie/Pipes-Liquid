@@ -26,7 +26,7 @@ public class CubicCurves : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0) && previewPipe.GetComponent<PreviewPipe>().canBeCreated && previewPipe.GetComponent<PreviewPipe>().canBeLined) 
             {
-                Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
+                //Debug.DrawLine(StartPoint.transform.position, hit.point, Color.green, 10000f);
 
                 //MakePipe(ray, hit);
                 MakeCurve(ray, hit);
